@@ -5,8 +5,8 @@ async function main() {
   const constructorArguments = [""];
 
   // We get the contract to deploy
-  const WMasterChef = await ethers.getContractFactory("WMasterChef");
-  const instance = await WMasterChefz.deploy(
+  const ArthUSDWrapper = await ethers.getContractFactory("ArthUSDWrapper");
+  const instance = await ArthUSDWrapper.deploy(
     String(constructorArguments[0]),
     String(constructorArguments[1]),
     String(constructorArguments[2]),
@@ -16,11 +16,10 @@ async function main() {
   );
 
   await instance.deployed();
-  console.log("WMasterChef deployed to:", instance.address);
+  console.log("ArthUSDWrapper deployed to:", instance.address);
 
   await hre.run("verify:verify", {
-    address: instanceof.address,
-    contract: "contracts/WMasterChef.sol:WMasterChef",
+    address: instance.address,
     constructorArguments,
   });
 }
