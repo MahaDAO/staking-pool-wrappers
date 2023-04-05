@@ -40,15 +40,6 @@ const config: HardhatUserConfig & any = {
         },
       },
       {
-        version: "0.8.13",
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 100,
-          },
-        },
-      },
-      {
         version: "0.7.6",
         settings: {
           optimizer: {
@@ -71,8 +62,7 @@ const config: HardhatUserConfig & any = {
   networks: {
     hardhat: {
       forking: {
-        url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
-        // blockNumber: 16334756,
+        url: `https://arb-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY_ARB}`,
       },
       accounts: [
         {
@@ -81,34 +71,14 @@ const config: HardhatUserConfig & any = {
         },
       ],
     },
-    dev: {
-      url: `http://127.0.0.1:8545/`,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
-    ropsten: {
-      url: `https://ropsten.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
+    arbitrum: {
+      url: `https://arb-mainnet.g.alchemy.com/v2/Pm5HPy74LXdxdHPfFOYlRaVaxgL_SE84`,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     ethereum: {
       url: `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
-      // `https://mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
-    mumbai: {
-      url: "https://matic-mumbai.chainstacklabs.com",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
-    polygon: {
-      url: "https://polygon-rpc.com/",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
-    rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
+      gasPrice: 14000000000,
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
@@ -135,6 +105,7 @@ const config: HardhatUserConfig & any = {
       mainnet: process.env.ETHERSCAN_API_KEY,
       goerli: process.env.ETHERSCAN_API_KEY,
       polygon: process.env.POLYGONSCAN_API_KEY,
+      arbitrumOne: process.env.ARBISCAN_API_KEY,
     },
   },
 };

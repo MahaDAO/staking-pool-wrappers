@@ -1,0 +1,22 @@
+{
+  "FeesSplitterImpl": {
+    "abi": "FeesSplitter",
+    "verified": true,
+    "address": "0x0b1b37c0d376e72d523319c6592f3A24D39912fD"
+  },
+  "FeesSplitter": {
+    "abi": "TransparentUpgradeableProxy",
+    "verified": true,
+    "address": "0x6818F17E4894CB1dAE9fD115f6da280291193C7b"
+  },
+  "WMasterChefV2Impl": {
+    "abi": "WMasterChefV2",
+    "verified": true,
+    "address": "0x53C6ADe8ae2eC803bfB1C494C7A1600C615Fe8FC"
+  },
+  "WMasterChefV2": {
+    "abi": "TransparentUpgradeableProxy",
+    "verified": true,
+    "address": "0x772500810ab7975073c14E2054f8f891A2190572"
+  }
+}
