@@ -27,11 +27,13 @@ contract FeeBase is Ownable {
 
     function initializeFeeBase(
         uint256 _rewardFeeRate,
-        address _rewardFeeDestination
+        address _rewardFeeDestination,
+        address _owner
     ) internal {
         pct100 = 100000000000;
         rewardFeeRate = _rewardFeeRate; // 0.5% in 10^9
         rewardFeeDestination = _rewardFeeDestination;
+        _transferOwnership(_owner);
     }
 
     function setRewardFeeRate(uint256 _new) external onlyOwner {

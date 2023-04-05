@@ -7,7 +7,6 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 import {ERC20Proxy, IERC20} from "../proxy/ERC20Proxy.sol";
-import {IERC20Wrapper} from "../interfaces/IERC20Wrapper.sol";
 import {IMiniChefV2} from "../interfaces/IMiniChefV2.sol";
 import {FeeBase} from "./FeeBase.sol";
 import {VersionedInitializable} from "../proxy/VersionedInitializable.sol";
@@ -15,12 +14,11 @@ import {VersionedInitializable} from "../proxy/VersionedInitializable.sol";
 /**
  * @title The sushi masterchef tokenzied for a specific pool
  */
-abstract contract WMasterChefV2 is
+contract WMasterChefV2 is
     VersionedInitializable,
     FeeBase,
     ERC20Proxy,
-    ReentrancyGuard,
-    IERC20Wrapper
+    ReentrancyGuard
 {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
@@ -45,7 +43,7 @@ abstract contract WMasterChefV2 is
         address _governance
     ) external initializer {
         initializeERC20(_name, _symbol);
-        initializeFeeBase(_rewardFee, _rewardDestination);
+        initializeFeeBase(_rewardFee, _rewardDestination, _governance);
 
         chef = _chef;
         lpToken = IERC20(_lpToken);
@@ -54,6 +52,10 @@ abstract contract WMasterChefV2 is
         me = address(this);
 
         _transferOwnership(_governance);
+    }
+
+    function getRevision() public pure virtual override returns (uint256) {
+        return 0;
     }
 
     function _depositFor(
