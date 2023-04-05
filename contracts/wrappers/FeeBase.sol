@@ -5,9 +5,7 @@ pragma solidity ^0.8.0;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import {IERC20Wrapper} from "../interfaces/IERC20Wrapper.sol";
 
 contract FeeBase is Ownable {
     using SafeERC20 for IERC20;
@@ -31,7 +29,7 @@ contract FeeBase is Ownable {
         address _owner
     ) internal {
         pct100 = 100000000000;
-        rewardFeeRate = _rewardFeeRate; // 0.5% in 10^9
+        rewardFeeRate = _rewardFeeRate;
         rewardFeeDestination = _rewardFeeDestination;
         _transferOwnership(_owner);
     }

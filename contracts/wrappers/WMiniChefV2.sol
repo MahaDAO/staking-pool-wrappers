@@ -27,9 +27,7 @@ contract WMasterChefV2 is
     IMiniChefV2 public chef; // Sushiswap masterChef
     IERC20 public rewardToken; // sushi
     IERC20 public lpToken;
-
-    uint256 private constant MAX_UINT256 = type(uint128).max;
-    address private me;
+    address public me;
 
     function initialize(
         string memory _name,
@@ -51,7 +49,7 @@ contract WMasterChefV2 is
         pid = _pid;
         me = address(this);
 
-        _transferOwnership(_governance);
+        lpToken.approve(address(chef), type(uint256).max);
     }
 
     function getRevision() public pure virtual override returns (uint256) {
@@ -66,7 +64,6 @@ contract WMasterChefV2 is
         lpToken.safeTransferFrom(account, me, amount);
 
         // stake into the masterchef contract
-        lpToken.safeIncreaseAllowance(address(chef), amount);
         chef.deposit(pid, amount, me);
 
         _mint(account, amount);
@@ -99,9 +96,9 @@ contract WMasterChefV2 is
 
     // capture rewards and send the fees to the governance contract
     function harvest() public {
-        uint256 balBefore = rewardToken.balanceOf(me);
+        uint256 balBefore = rewardTokenBalance();
         chef.harvest(pid, me);
-        uint256 earnings = rewardToken.balanceOf(me).sub(balBefore);
+        uint256 earnings = rewardTokenBalance().sub(balBefore);
         _chargeFee(rewardToken, earnings);
     }
 
@@ -129,7 +126,7 @@ contract WMasterChefV2 is
     function _accumulatedRewardsForAmount(
         uint256 bal
     ) internal view returns (uint256) {
-        uint256 accRewards = rewardTokenBalance();
+        uint256 accRewards = _accumulatedRewards();
         uint256 total = totalSupply();
         uint256 perc = bal.mul(1e18).div(total);
         return accRewards.mul(perc).div(1e18);
