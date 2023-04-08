@@ -41,6 +41,7 @@ contract ERC20Proxy is Context, IERC20, IERC20Metadata {
 
     string private _name;
     string private _symbol;
+    uint8 private _decimals;
 
     /**
      * @dev Sets the values for {name} and {symbol}.
@@ -53,10 +54,12 @@ contract ERC20Proxy is Context, IERC20, IERC20Metadata {
      */
     function initializeERC20(
         string memory name_,
-        string memory symbol_
+        string memory symbol_,
+        uint8 decimals_
     ) internal {
         _name = name_;
         _symbol = symbol_;
+        _decimals = decimals_;
     }
 
     /**
@@ -88,7 +91,7 @@ contract ERC20Proxy is Context, IERC20, IERC20Metadata {
      * {IERC20-balanceOf} and {IERC20-transfer}.
      */
     function decimals() public view virtual override returns (uint8) {
-        return 18;
+        return _decimals;
     }
 
     /**

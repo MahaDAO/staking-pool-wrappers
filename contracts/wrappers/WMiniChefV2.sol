@@ -6,7 +6,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import {SafeMath} from "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-import {ERC20Proxy, IERC20} from "../proxy/ERC20Proxy.sol";
+import {ERC20PermitProxy, IERC20} from "../proxy/ERC20PermitProxy.sol";
 import {IMiniChefV2} from "../interfaces/IMiniChefV2.sol";
 import {FeeBase} from "./FeeBase.sol";
 import {VersionedInitializable} from "../proxy/VersionedInitializable.sol";
@@ -17,7 +17,7 @@ import {VersionedInitializable} from "../proxy/VersionedInitializable.sol";
 contract WMasterChefV2 is
     VersionedInitializable,
     FeeBase,
-    ERC20Proxy,
+    ERC20PermitProxy,
     ReentrancyGuard
 {
     using SafeMath for uint256;
@@ -38,9 +38,10 @@ contract WMasterChefV2 is
         address _rewardToken,
         address _rewardDestination,
         uint256 _rewardFee,
-        address _governance
+        address _governance,
+        uint8 _decimals
     ) external initializer {
-        initializeERC20(_name, _symbol);
+        initializeERC20Permit(_name, _symbol, _decimals);
         initializeFeeBase(_rewardFee, _rewardDestination, _governance);
 
         chef = _chef;

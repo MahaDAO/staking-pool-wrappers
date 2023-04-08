@@ -45,9 +45,10 @@ abstract contract ERC20PermitProxy is ERC20Proxy, IERC20Permit, EIP712Proxy {
      */
     function initializeERC20Permit(
         string memory name,
-        string memory symbol
+        string memory symbol,
+        uint8 decimals
     ) internal {
-        initializeERC20(name, symbol);
+        initializeERC20(name, symbol, decimals);
         initializeEIP712(name, "1");
     }
 
